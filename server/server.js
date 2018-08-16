@@ -18,15 +18,17 @@ io.on('connection', (socket) => {
     
     socket.broadcast.emit('newMsg', generateMsg('Admin', 'New User Joined'));
 
-    socket.on('createMsg', (newMsg) => {
+    socket.on('createMsg', (newMsg, callback) => {
         console.log('createMsg', newMsg);
         io.emit('newMsg', generateMsg(newMsg.from, newMsg.text))
+        callback('This is from the server');
         // socket.broadcast.emit('newMsg', {
         //     from: newMsg.from,
         //     text: newMsg.text,
         //     createdAt: new Date().getTime()
         // })
     })
+
     socket.on('disconnect', (socket) => {
         console.log('User disconnected');
     })
